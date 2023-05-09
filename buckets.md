@@ -1,6 +1,6 @@
 # Buckets
 
-Buckets are treatments of a experiment, basiclly every treatment has it's own number
+Buckets are treatments of a experiment, basically every treatment has it's own number
 
 ## Here is a table of the buckets in discord : 
 
