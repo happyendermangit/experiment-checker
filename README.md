@@ -1,4 +1,4 @@
-# experiment-checker-assyst
+# experiment checker docs
 
 SOON! i'm working in it
 
