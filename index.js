@@ -1,5 +1,5 @@
 function check(args){ 
   let splited = args.split(':') 
   let experiment = splited[0] 
-  if (experiment in ["discord"]){"✔️✅";}else{"NO!"} 
+  if (experiment in ["discord"]){return "✔️✅";}else{return "NO!"} 
 }
