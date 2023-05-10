@@ -1,3 +1,9 @@
+
+let data;
+fetch('https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/experiments.js')
+  .then(response => response.json())
+  .then(json => data = json);
+
 function between_(num,min,max){
     return num >= min && num <= max;
 }
@@ -25,12 +31,14 @@ function check(args) {
     let experiment = splited[0];
     let murmurhash3 = hash(args);
     let ids = [];
+    console.log(splited[0]);
     for (let d of data) {
         ids.push(Object.keys(d)[0]);
     }
     console.log(ids);
     if (ids.indexOf(experiment) !== -1) {
         let rollouts = data[ids.indexOf(experiment)][experiment];
+        console.log(rollouts);
         let result = '';
         for (let e of rollouts) {
             if (e.filters[0] && e.filters[0].guild_features) {
@@ -52,3 +60,5 @@ function check(args) {
         res;
     }
 }
+
+
