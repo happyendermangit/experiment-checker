@@ -3,10 +3,10 @@
 SOON! i'm working in it
 
 ALPHA CODE : 
-```json
+```js
 {js: 
-{download:https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/experiments.js}  
 {download:https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/index.js} 
+check("{args}")
 }
 ```
 
