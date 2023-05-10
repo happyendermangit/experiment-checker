@@ -2,6 +2,14 @@
 
 SOON! i'm working in it
 
+ALPHA CODE : 
+```json
+{js: 
+{download:https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/experiments.js}  
+{download:https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/index.js} 
+}
+```
+
 
 ### How it works...??? 
 - The experiment checker tool checks if a specific experiment is enabled for a guild.
