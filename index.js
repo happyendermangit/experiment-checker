@@ -1,8 +1,20 @@
 
 let data;
-fetch('https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/experiments.js')
-  .then(response => response.json())
-  .then(json => data = json);
+const request = new XMLHttpRequest();
+request.open('GET', 'https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/experiments.js', true);
+request.onload = function() {
+  if (this.status >= 200 && this.status < 400) {
+    const json = JSON.parse(this.response);
+    data = json.experiments;
+  } else {
+    'Error fetching data:', this.status, this.statusText;
+  }
+};
+request.onerror = function() {
+  'Error fetching data:', this.status, this.statusText;
+};
+request.send();
+
 
 function between_(num,min,max){
     return num >= min && num <= max;
