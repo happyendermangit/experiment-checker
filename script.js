@@ -107,7 +107,7 @@ if (ids.indexOf(experiment) !== -1) {
             }
         }
     }
-    return "NO";
+    return "❌";
 } else {
     return "✖️ Experiment doesn't exist!";
 }
