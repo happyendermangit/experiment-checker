@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment checker</title>
+</head>
+<body>
+  <center>
+    <nav class="navbar">
+      <a href="#" class="navbar-brand">Experiment checker</a>
+      <div>
+        
+      </div>
+    </nav>
+    <div id="page-title">
+    <h1>💎 The best & free website to check experiments </h1>
+    <p>Start checking if a experiment is available in a guild using only the guild id and the experiment codename 👇👇</p>
+    <br>
+
+    <button class="button primary" onclick="document.getElementById('page-title').hidden = true;document.getElementById('check').hidden = false">Check now!.</button>
+    </div>
+    <form hidden id="check">
+      <h1>➡️ Enter the informations below : </h1>
+       <label for="experimentName">Experiment codename:</label>
+         
+         <input list="experimentsIds" class="input" id="experimentName">
+
+         <datalist id="experimentsIds">
+
+
+         </datalist>
+
+  
+       <label for="guildId" >Guild id:</label>
+       <input type="number" class="input" id="guildId" name="guildId"><br><br>
+       <button type="button" class="button primary" onclick="checkExperiment()">Check</button>
+     </form>
+     <br>
+       <div class="res" id="res">
+      
+        
+   <br><br><br><br><br><br><br><br><br><br>
+   </div>
+         <br><br>
+         <footer style="font-size: 20px;font-weight: bold">Made by happy enderman (aka | __.JS.__ |)</footer>
+         <br>
+         <span class="note warning">Not affiliated with Discord</span>
+
+                    </center>
+  <div id="toast-wrapper"></div>
+     <script src="script.js">     </script>
+  <link rel="stylesheet" href="style.css"/>
+</body>
+</html>
