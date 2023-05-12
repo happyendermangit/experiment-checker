@@ -23,10 +23,6 @@ e ^= e >>> 16;
 return (e >>> 0) % 1e4;
 }
 
-for (let d of data) {
-  let id = Object.keys(d)[0]
-   document.getElementById('experimentsIds').innerHTML += `<option value="${id}">${id}</option>`;
-}
 function check(args) {
 let splited = args.split(':');
 let experiment = splited[0];
