@@ -88,6 +88,7 @@ for (let d of data) {
     ids.push(Object.keys(d)[0]);
 }
 console.log(ids);
+if (args.split(':')[0] && args && args.split(':')[1]){
 if (ids.indexOf(experiment) !== -1) {
     let rollouts = data[ids.indexOf(experiment)][experiment];
     console.log(rollouts);
@@ -107,9 +108,12 @@ if (ids.indexOf(experiment) !== -1) {
             }
         }
     }
-    return "❌";
+    return "❌ You don't have " + experiment + ` in ${splited[1]} (DEBUG: ||${murmurhash3}||)`;
 } else {
     return "✖️ Experiment doesn't exist!";
+}
+}else{
+  return "❌ Enter the guild id!"
 }
 }
 
