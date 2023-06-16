@@ -1,76 +1,66 @@
-
 let data;
+
 const request = new XMLHttpRequest();
-request.open('GET', 'https://raw.githubusercontent.com/happyendermangit/experiment-checker-assyst/main/experiments.js', true);
+request.open('GET', 'https://api.distools.xhyrom.dev/v2/experiments', true);
 request.onload = function() {
   if (this.status >= 200 && this.status < 400) {
     const json = JSON.parse(this.response);
     data = json.experiments;
   } else {
-    'Error fetching data:', this.status, this.statusText;
+    console.error('Error fetching data:', this.status, this.statusText);
   }
 };
 request.onerror = function() {
-  'Error fetching data:', this.status, this.statusText;
+  console.error('Error fetching data:', this.status, this.statusText);
 };
 request.send();
 
 
-function between_(num,min,max){
-    return num >= min && num <= max;
-}
-function hash(x) {
-    var e, a = 0, c = 3432918353, h = 461845907, r = 0;
-    for (var t = x; r < t.length - t.length % 4; r += 4) {
-      e = 5 * (65535 & (e = (e ^= a = (65535 & (a = (a = (65535 & (a = 255 & t.charCodeAt(r) | (255 & t.charCodeAt(r + 1)) << 8 | (255 & t.charCodeAt(r + 2)) << 16 | (255 & t.charCodeAt(r + 3)) << 24)) * c + (((a >>> 16) * c & 65535) << 16)) << 15 | a >>> 17)) * h + (((a >>> 16) * h & 65535) << 16)) << 13 | e >>> 19)) + ((5 * (e >>> 16) & 65535) << 16) + 3864292196;
-    }
-    switch (a = 0, t.length % 4) {
-      case 3:
-        a ^= (255 & t.charCodeAt(r + 2)) << 16;
-      case 2:
-        a ^= (255 & t.charCodeAt(r + 1)) << 8;
-      case 1:
-        e ^= a = (65535 & (a = (a = (65535 & (a ^= 255 & t.charCodeAt(r))) * c + (((a >>> 16) * c & 65535) << 16)) << 15 | a >>> 17)) * h + (((a >>> 16) * h & 65535) << 16);
-    }
-    e ^= t.length;
-    e = 2246822507 * (65535 & (e ^= e >>> 16)) + ((2246822507 * (e >>> 16) & 65535) << 16);
-    e = 3266489909 * (65535 & (e ^= e >>> 13)) + ((3266489909 * (e >>> 16) & 65535) << 16);
-    e ^= e >>> 16;
-    return (e >>> 0) % 1e4;
-}
 function check(args) {
-    let splited = args.split(':');
-    let experiment = splited[0];
-    let murmurhash3 = hash(args);
-    let ids = [];
-    console.log(splited[0]);
-    for (let d of data) {
-        ids.push(Object.keys(d)[0]);
-    }
-    console.log(ids);
-    if (ids.indexOf(experiment) !== -1) {
-        let rollouts = data[ids.indexOf(experiment)][experiment];
-        console.log(rollouts);
-        let result = '';
-        for (let e of rollouts) {
-            if (e.filters[0] && e.filters[0].guild_features) {
-                continue;
-            }
-            for (let b of Object.keys(e.buckets)) {
-                let bucket = e.buckets[b];
-                if (between_(murmurhash3, bucket.rollout[0].min, bucket.rollout[0].max)) {
-                    result = (b === "-1") ? "❌ You don't have " + experiment + ` in ${splited[1]} (DEBUG: ||${murmurhash3}||)` : "✅ You do have " + `${experiment} in ${splited[1]} (DEBUG: ||${murmurhash3}||)`;
-                    if (result.startsWith('✅')) {
-                        result += `(Treatment ${b})`;
-                    }
-                    result;
-                }
-            }
-        }
-    } else {
-        let res = "❌ Experiment doesn't exist!";
-        res;
-    }
+  let splited = args.split(':');
+  let experiment = splited[0];
+  let murmurhash3 = hash(args);
+
+  let ids = [];
+  for (let d of data) {
+    ids.push(Object.keys(d)[0]);
+  }
+
+  if (ids.indexOf(experiment) !== -1) {
+    let url = 'https://api.distools.xhyrom.dev/v2/eligible';
+    let body = {
+      "experiment_id": experiment,
+      "guild": {
+        "id": splited[1],
+        "features": []
+      }
+    };
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(response => response.json())
+    .then(data => {
+
+
+      let result = '';
+      result = data.eligible ? `❌ You don't have ${experiment} in ${splited[1]} (DEBUG: ||${murmurhash3}||)` : `✅ You do have ${experiment} in ${splited[1]} (DEBUG: ||${murmurhash3}||)`;
+      if (result.startsWith('✅')) {
+        let b =  data.bucket 
+        result += b == null ? `(None)`: `(Treatment ${b})`;
+      }
+      console.log(result);
+      return result;
+    })
+    .catch(error => {
+      console.error('API request error:', error);
+    });
+  } else {
+    console.log("❌ Experiment doesn't exist!");
+    return "❌ Experiment doesn't exist!";
+  }
 }
-
-
